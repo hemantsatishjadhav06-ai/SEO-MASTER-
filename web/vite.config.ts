@@ -16,9 +16,19 @@ if (typeof transformMdx === "function") {
   };
 }
 
+// ALLOWED_HOST="*" disables Vite's host check (allowedHosts: true), needed
+// behind a platform proxy (e.g. Railway) whose healthcheck/edge Host header
+// isn't known ahead of time; otherwise Vite answers 403 "Blocked request".
+const allowedHosts: true | undefined =
+  process.env.ALLOWED_HOST === "*" ? true : undefined;
+
 export default defineConfig({
   server: {
     port: 4322,
+    allowedHosts,
+  },
+  preview: {
+    allowedHosts,
   },
   ssr: {
     resolve: {

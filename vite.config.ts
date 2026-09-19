@@ -15,10 +15,21 @@ export default defineConfig(({ mode }) => {
       ? Number(env.PORT)
       : 3001;
   const showDevtools = env.VITE_SHOW_DEVTOOLS !== "false";
-  const allowedHosts = [
-    env.ALLOWED_HOST,
-    env.BETTER_AUTH_URL ? new URL(env.BETTER_AUTH_URL).hostname : undefined,
-  ].filter((host): host is string => Boolean(host));
+  // ALLOWED_HOST="*" disables Vite's host check entirely (allowedHosts: true).
+  // Needed behind a platform proxy whose healthcheck/edge Host header isn't
+  // known ahead of time (e.g. Railway); otherwise Vite answers 403 "Blocked
+  // request". A specific host (or comma-separated list) is still honored.
+  const allowedHosts: true | string[] =
+    env.ALLOWED_HOST === "*"
+      ? true
+      : [
+          ...(env.ALLOWED_HOST ? env.ALLOWED_HOST.split(",") : []),
+          env.BETTER_AUTH_URL
+            ? new URL(env.BETTER_AUTH_URL).hostname
+            : undefined,
+        ]
+          .map((host) => host?.trim())
+          .filter((host): host is string => Boolean(host));
   const emitSourcemaps = env.POSTHOG_SOURCEMAPS === "true";
 
   return {
