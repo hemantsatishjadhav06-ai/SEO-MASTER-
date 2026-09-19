@@ -36,4 +36,8 @@ else
   printf '%s' "$FINGERPRINT" > "$FP_FILE"
 fi
 
-exec pnpm exec vite preview --host 0.0.0.0 --port "${PORT:-3001}"
+# SERVE_HOST defaults to 0.0.0.0 (IPv4) for local Docker/compose use. Hosts with
+# an IPv6-only private network and healthchecks (e.g. Railway) must set
+# SERVE_HOST=:: so the server is reachable there; :: is dual-stack and still
+# serves IPv4 clients.
+exec pnpm exec vite preview --host "${SERVE_HOST:-0.0.0.0}" --port "${PORT:-3001}"

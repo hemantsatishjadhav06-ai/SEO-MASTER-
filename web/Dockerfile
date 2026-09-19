@@ -25,6 +25,8 @@ RUN pnpm run build
 
 EXPOSE 3000
 
-# vite preview serves the production build in workerd. --host exposes it on all
-# interfaces and --port binds to the platform-provided PORT (Railway sets it).
-CMD ["sh", "-c", "pnpm exec vite preview --host 0.0.0.0 --port ${PORT:-3000}"]
+# vite preview serves the production build in workerd. SERVE_HOST defaults to
+# 0.0.0.0 (IPv4); hosts with an IPv6-only private network and healthchecks
+# (e.g. Railway) set SERVE_HOST=:: so the server is reachable there (:: is
+# dual-stack and still serves IPv4 clients). --port binds the platform PORT.
+CMD ["sh", "-c", "pnpm exec vite preview --host ${SERVE_HOST:-0.0.0.0} --port ${PORT:-3000}"]
