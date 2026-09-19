@@ -12,7 +12,10 @@ ENV PATH=$PNPM_HOME:$PATH
 
 WORKDIR /app
 
-RUN corepack enable
+# Pin pnpm to match the app image. Without a packageManager pin in web/, corepack
+# would fetch the latest pnpm (v12+), which turns "ignored build scripts"
+# (esbuild, sharp, workerd) into a hard install error under --frozen-lockfile.
+RUN corepack enable && corepack prepare pnpm@10.30.1 --activate
 
 # Install dependencies first so this layer is cached across source-only changes.
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
