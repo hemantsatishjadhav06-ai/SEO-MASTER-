@@ -30,6 +30,10 @@ const STATIC_PATHS = [
   "/google-search-console-mcp",
   "/roadmap",
   "/support",
+  "/compare",
+  "/semrush-alternative",
+  "/ahrefs-alternative",
+  "/free-seo-tools",
   ...Object.values(FEATURE_PAGE_SLUGS).map((slug) => `/features/${slug}`),
 ];
 

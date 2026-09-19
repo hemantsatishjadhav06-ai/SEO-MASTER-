@@ -24,11 +24,15 @@ import { Route as ApiSubscribeRouteImport } from './routes/api/subscribe'
 import { Route as ApiEventRouteImport } from './routes/api/event'
 import { Route as ApiBacklinkCheckRouteImport } from './routes/api/backlink-check'
 import { Route as MarketingSupportRouteImport } from './routes/_marketing/support'
+import { Route as MarketingSemrushAlternativeRouteImport } from './routes/_marketing/semrush-alternative'
 import { Route as MarketingRoadmapRouteImport } from './routes/_marketing/roadmap'
 import { Route as MarketingPricingRouteImport } from './routes/_marketing/pricing'
 import { Route as MarketingOpenSourceSeoRouteImport } from './routes/_marketing/open-source-seo'
 import { Route as MarketingGoogleSearchConsoleMcpRouteImport } from './routes/_marketing/google-search-console-mcp'
+import { Route as MarketingFreeSeoToolsRouteImport } from './routes/_marketing/free-seo-tools'
+import { Route as MarketingCompareRouteImport } from './routes/_marketing/compare'
 import { Route as MarketingBacklinkCheckerRouteImport } from './routes/_marketing/backlink-checker'
+import { Route as MarketingAhrefsAlternativeRouteImport } from './routes/_marketing/ahrefs-alternative'
 import { Route as MarketingLibraryIndexRouteImport } from './routes/_marketing/library/index'
 import { Route as MarketingFeaturesIndexRouteImport } from './routes/_marketing/features/index'
 import { Route as MarketingFeaturesSiteAuditRouteImport } from './routes/_marketing/features/site-audit'
@@ -148,6 +152,12 @@ const MarketingSupportRoute = MarketingSupportRouteImport.update({
   path: '/support',
   getParentRoute: () => MarketingRoute,
 } as any)
+const MarketingSemrushAlternativeRoute =
+  MarketingSemrushAlternativeRouteImport.update({
+    id: '/semrush-alternative',
+    path: '/semrush-alternative',
+    getParentRoute: () => MarketingRoute,
+  } as any)
 const MarketingRoadmapRoute = MarketingRoadmapRouteImport.update({
   id: '/roadmap',
   path: '/roadmap',
@@ -169,10 +179,26 @@ const MarketingGoogleSearchConsoleMcpRoute =
     path: '/google-search-console-mcp',
     getParentRoute: () => MarketingRoute,
   } as any)
+const MarketingFreeSeoToolsRoute = MarketingFreeSeoToolsRouteImport.update({
+  id: '/free-seo-tools',
+  path: '/free-seo-tools',
+  getParentRoute: () => MarketingRoute,
+} as any)
+const MarketingCompareRoute = MarketingCompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => MarketingRoute,
+} as any)
 const MarketingBacklinkCheckerRoute =
   MarketingBacklinkCheckerRouteImport.update({
     id: '/backlink-checker',
     path: '/backlink-checker',
+    getParentRoute: () => MarketingRoute,
+  } as any)
+const MarketingAhrefsAlternativeRoute =
+  MarketingAhrefsAlternativeRouteImport.update({
+    id: '/ahrefs-alternative',
+    path: '/ahrefs-alternative',
     getParentRoute: () => MarketingRoute,
   } as any)
 const MarketingLibraryIndexRoute = MarketingLibraryIndexRouteImport.update({
@@ -445,11 +471,15 @@ export interface FileRoutesByFullPath {
   '/': typeof MarketingIndexRoute
   '/privacy': typeof PrivacyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/ahrefs-alternative': typeof MarketingAhrefsAlternativeRoute
   '/backlink-checker': typeof MarketingBacklinkCheckerRoute
+  '/compare': typeof MarketingCompareRoute
+  '/free-seo-tools': typeof MarketingFreeSeoToolsRoute
   '/google-search-console-mcp': typeof MarketingGoogleSearchConsoleMcpRoute
   '/open-source-seo': typeof MarketingOpenSourceSeoRoute
   '/pricing': typeof MarketingPricingRoute
   '/roadmap': typeof MarketingRoadmapRoute
+  '/semrush-alternative': typeof MarketingSemrushAlternativeRoute
   '/support': typeof MarketingSupportRoute
   '/api/backlink-check': typeof ApiBacklinkCheckRoute
   '/api/event': typeof ApiEventRoute
@@ -509,11 +539,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/ahrefs-alternative': typeof MarketingAhrefsAlternativeRoute
   '/backlink-checker': typeof MarketingBacklinkCheckerRoute
+  '/compare': typeof MarketingCompareRoute
+  '/free-seo-tools': typeof MarketingFreeSeoToolsRoute
   '/google-search-console-mcp': typeof MarketingGoogleSearchConsoleMcpRoute
   '/open-source-seo': typeof MarketingOpenSourceSeoRoute
   '/pricing': typeof MarketingPricingRoute
   '/roadmap': typeof MarketingRoadmapRoute
+  '/semrush-alternative': typeof MarketingSemrushAlternativeRoute
   '/support': typeof MarketingSupportRoute
   '/api/backlink-check': typeof ApiBacklinkCheckRoute
   '/api/event': typeof ApiEventRoute
@@ -576,11 +610,15 @@ export interface FileRoutesById {
   '/_marketing': typeof MarketingRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/terms-and-conditions': typeof TermsAndConditionsRoute
+  '/_marketing/ahrefs-alternative': typeof MarketingAhrefsAlternativeRoute
   '/_marketing/backlink-checker': typeof MarketingBacklinkCheckerRoute
+  '/_marketing/compare': typeof MarketingCompareRoute
+  '/_marketing/free-seo-tools': typeof MarketingFreeSeoToolsRoute
   '/_marketing/google-search-console-mcp': typeof MarketingGoogleSearchConsoleMcpRoute
   '/_marketing/open-source-seo': typeof MarketingOpenSourceSeoRoute
   '/_marketing/pricing': typeof MarketingPricingRoute
   '/_marketing/roadmap': typeof MarketingRoadmapRoute
+  '/_marketing/semrush-alternative': typeof MarketingSemrushAlternativeRoute
   '/_marketing/support': typeof MarketingSupportRoute
   '/api/backlink-check': typeof ApiBacklinkCheckRoute
   '/api/event': typeof ApiEventRoute
@@ -644,11 +682,15 @@ export interface FileRouteTypes {
     | '/'
     | '/privacy'
     | '/terms-and-conditions'
+    | '/ahrefs-alternative'
     | '/backlink-checker'
+    | '/compare'
+    | '/free-seo-tools'
     | '/google-search-console-mcp'
     | '/open-source-seo'
     | '/pricing'
     | '/roadmap'
+    | '/semrush-alternative'
     | '/support'
     | '/api/backlink-check'
     | '/api/event'
@@ -708,11 +750,15 @@ export interface FileRouteTypes {
   to:
     | '/privacy'
     | '/terms-and-conditions'
+    | '/ahrefs-alternative'
     | '/backlink-checker'
+    | '/compare'
+    | '/free-seo-tools'
     | '/google-search-console-mcp'
     | '/open-source-seo'
     | '/pricing'
     | '/roadmap'
+    | '/semrush-alternative'
     | '/support'
     | '/api/backlink-check'
     | '/api/event'
@@ -774,11 +820,15 @@ export interface FileRouteTypes {
     | '/_marketing'
     | '/privacy'
     | '/terms-and-conditions'
+    | '/_marketing/ahrefs-alternative'
     | '/_marketing/backlink-checker'
+    | '/_marketing/compare'
+    | '/_marketing/free-seo-tools'
     | '/_marketing/google-search-console-mcp'
     | '/_marketing/open-source-seo'
     | '/_marketing/pricing'
     | '/_marketing/roadmap'
+    | '/_marketing/semrush-alternative'
     | '/_marketing/support'
     | '/api/backlink-check'
     | '/api/event'
@@ -960,6 +1010,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingSupportRouteImport
       parentRoute: typeof MarketingRoute
     }
+    '/_marketing/semrush-alternative': {
+      id: '/_marketing/semrush-alternative'
+      path: '/semrush-alternative'
+      fullPath: '/semrush-alternative'
+      preLoaderRoute: typeof MarketingSemrushAlternativeRouteImport
+      parentRoute: typeof MarketingRoute
+    }
     '/_marketing/roadmap': {
       id: '/_marketing/roadmap'
       path: '/roadmap'
@@ -988,11 +1045,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingGoogleSearchConsoleMcpRouteImport
       parentRoute: typeof MarketingRoute
     }
+    '/_marketing/free-seo-tools': {
+      id: '/_marketing/free-seo-tools'
+      path: '/free-seo-tools'
+      fullPath: '/free-seo-tools'
+      preLoaderRoute: typeof MarketingFreeSeoToolsRouteImport
+      parentRoute: typeof MarketingRoute
+    }
+    '/_marketing/compare': {
+      id: '/_marketing/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof MarketingCompareRouteImport
+      parentRoute: typeof MarketingRoute
+    }
     '/_marketing/backlink-checker': {
       id: '/_marketing/backlink-checker'
       path: '/backlink-checker'
       fullPath: '/backlink-checker'
       preLoaderRoute: typeof MarketingBacklinkCheckerRouteImport
+      parentRoute: typeof MarketingRoute
+    }
+    '/_marketing/ahrefs-alternative': {
+      id: '/_marketing/ahrefs-alternative'
+      path: '/ahrefs-alternative'
+      fullPath: '/ahrefs-alternative'
+      preLoaderRoute: typeof MarketingAhrefsAlternativeRouteImport
       parentRoute: typeof MarketingRoute
     }
     '/_marketing/library/': {
@@ -1307,11 +1385,15 @@ declare module '@tanstack/react-router' {
 }
 
 interface MarketingRouteChildren {
+  MarketingAhrefsAlternativeRoute: typeof MarketingAhrefsAlternativeRoute
   MarketingBacklinkCheckerRoute: typeof MarketingBacklinkCheckerRoute
+  MarketingCompareRoute: typeof MarketingCompareRoute
+  MarketingFreeSeoToolsRoute: typeof MarketingFreeSeoToolsRoute
   MarketingGoogleSearchConsoleMcpRoute: typeof MarketingGoogleSearchConsoleMcpRoute
   MarketingOpenSourceSeoRoute: typeof MarketingOpenSourceSeoRoute
   MarketingPricingRoute: typeof MarketingPricingRoute
   MarketingRoadmapRoute: typeof MarketingRoadmapRoute
+  MarketingSemrushAlternativeRoute: typeof MarketingSemrushAlternativeRoute
   MarketingSupportRoute: typeof MarketingSupportRoute
   MarketingIndexRoute: typeof MarketingIndexRoute
   MarketingFeaturesAiBrandVisibilityRoute: typeof MarketingFeaturesAiBrandVisibilityRoute
@@ -1361,11 +1443,15 @@ interface MarketingRouteChildren {
 }
 
 const MarketingRouteChildren: MarketingRouteChildren = {
+  MarketingAhrefsAlternativeRoute: MarketingAhrefsAlternativeRoute,
   MarketingBacklinkCheckerRoute: MarketingBacklinkCheckerRoute,
+  MarketingCompareRoute: MarketingCompareRoute,
+  MarketingFreeSeoToolsRoute: MarketingFreeSeoToolsRoute,
   MarketingGoogleSearchConsoleMcpRoute: MarketingGoogleSearchConsoleMcpRoute,
   MarketingOpenSourceSeoRoute: MarketingOpenSourceSeoRoute,
   MarketingPricingRoute: MarketingPricingRoute,
   MarketingRoadmapRoute: MarketingRoadmapRoute,
+  MarketingSemrushAlternativeRoute: MarketingSemrushAlternativeRoute,
   MarketingSupportRoute: MarketingSupportRoute,
   MarketingIndexRoute: MarketingIndexRoute,
   MarketingFeaturesAiBrandVisibilityRoute:

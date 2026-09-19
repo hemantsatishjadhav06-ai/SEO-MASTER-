@@ -54,6 +54,16 @@ export function SiteFooter({ className }: { className?: string }) {
           <p className="font-semibold text-neutral-900">Free Tools</p>
           <div className="mt-2 flex flex-col gap-1.5">
             <Link to="/backlink-checker">Backlink Checker</Link>
+            <a href="/free-seo-tools">Free SEO Tools</a>
+          </div>
+        </div>
+
+        <div>
+          <p className="font-semibold text-neutral-900">Compare</p>
+          <div className="mt-2 flex flex-col gap-1.5">
+            <a href="/semrush-alternative">Semrush alternative</a>
+            <a href="/ahrefs-alternative">Ahrefs alternative</a>
+            <a href="/compare">All comparisons</a>
           </div>
         </div>
 
