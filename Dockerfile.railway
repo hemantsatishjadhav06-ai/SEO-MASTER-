@@ -1,0 +1,42 @@
+# Railway (and other generic container hosts) image for the OpenSEO app.
+#
+# Unlike Dockerfile.selfhost, which builds at container start, this builds the
+# app during the image build. That matters on Railway for two reasons:
+#   1. The Cloudflare Vite plugin serializes the *current* process env into a
+#      .dev.vars file during `vite build`. At container start Railway injects
+#      ~20 platform variables, and one value breaks that serializer
+#      ("Unable to serialize value to .dev.vars"). The image build runs with a
+#      clean, known env, so the serialization is well-defined.
+#   2. No slow, memory-heavy rebuild on every cold start.
+#
+# The client bundle inlines AUTH_MODE at build time, so it is fixed here to the
+# self-host default. Runtime bindings still read the live process env because
+# the service sets CLOUDFLARE_INCLUDE_PROCESS_ENV=true.
+FROM node:22
+
+ENV PNPM_HOME=/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+
+WORKDIR /app
+
+RUN corepack enable && corepack prepare pnpm@10.30.1 --activate
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+
+# Client-affecting build env (kept in sync with vite.config.ts envPrefix). Built
+# in, not read at runtime, so it must match the runtime AUTH_MODE.
+ENV AUTH_MODE=local_noauth
+RUN pnpm run build
+
+EXPOSE 3001
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3001)+'/api/health').then(function(r){process.exit(r.ok?0:1)}).catch(function(){process.exit(1)})"
+
+# Apply local D1 migrations against the mounted volume, then serve the prebuilt
+# app. SERVE_HOST=:: (set on the Railway service) gives a dual-stack listener so
+# Railway's IPv6 private network / healthcheck can reach it.
+CMD ["sh", "-c", "pnpm run db:migrate:local && exec pnpm exec vite preview --host ${SERVE_HOST:-0.0.0.0} --port ${PORT:-3001}"]
